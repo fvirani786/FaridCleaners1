@@ -1,22 +1,19 @@
+// middleware/auth.js
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const { User } = require('../models/Person');
 
-const auth = async (req, res, next) => {
-  try {
+const isAuthenticated = async (req, res, next) => {
     const token = req.header('Authorization').replace('Bearer ', '');
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findOne({ _id: decoded._id });
-
-    if (!user) {
-      throw new Error();
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const Person = await Person.findOne({ _id: decoded._id, 'tokens.token': token });
+        if (!person) throw new Error();
+        req.person = person;
+        next();
+    } catch (err) {
+        res.status(401).json({ error: 'Please authenticate.' });
     }
-
-    req.user = user;
-    next();
-  } catch (error) {
-    res.status(401).send({ error: 'Please authenticate.' });
-  }
 };
 
-module.exports = auth;
+module.exports = { isAuthenticated };
 
