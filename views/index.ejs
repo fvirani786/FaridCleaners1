@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Restaurant Finder</title>
+  <title>Dry cleaners</title>
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-  <h1>Restaurant Finder</h1>
-  <form action="/restaurants" method="get">
+  <h1>Dry Cleaners</h1>
+  <form action="/drycleaners" method="get">
     <input type="text" name="location" placeholder="Enter location">
     <select name="category">
-      <option value="">All Categories</option>
+      <option value="">All </option>
       <% categories.forEach(category => { %>
         <option value="<%= category._id %>"><%= category.name %></option>
       <% }) %>

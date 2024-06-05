@@ -1,9 +1,16 @@
-const User = require('./Person');
-const Task = require('./Service');
-const Review = require('./Review');
+const mongoose = require('mongoose');
+require('dotenv').config();
+console.log('--PRINT--', process.env.MONGO_URI);
+// import models
+const User = require('./user');
+mongoose.connect(process.env.MONGO_URI);
+
+const db = mongoose.connection;
+
+db.once('open', () => console.log(`Connected to MongoDB at ${db.host}:${db.port}`));
+db.on('error', (error) => console.log('Database error \n', error));
 
 module.exports = {
-    User,
-    Service,
-    Review
+    // models go
+    User, Review, Service, Store 
 };

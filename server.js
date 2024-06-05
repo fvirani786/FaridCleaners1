@@ -1,77 +1,88 @@
-require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const path = require('path');
 const session = require('express-session');
-const passport = require('./config/passport-config');
-const isLoggedIn = require('./middleware/logInfo');
-const { isAuthenticated } = require('./middleware/auth');
-const PORT = process.env.PORT || 3000;
+const passport = require('passport');
+const flash = require('connect-flash');
+const dotenv = require('dotenv');
+const path = require('path');
 const SECRET_SESSION = process.env.SECRET_SESSION;
 
-// Import models
-const User = require('./models/Person');
+dotenv.config();
 
-// Initialize app
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-// Set EJS as the view engine
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+// MongoDB Connection
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.log(err));
+
+// Passport Config
+require('./config/passport')(passport);
 
 // Middleware
-app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Session
 app.use(session({
-    secret: SECRET_SESSION,
-    resave: false,
-    saveUninitialized: true
+  secret: SECRET_SESSION,
+  resave: false,
+  saveUninitialized: true
 }));
 
-
-// Initialize passport
+// Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Middleware for tracking users and alerts
+// Connect Flash
+app.use(flash());
+
+// Global Variables for Flash Messages
 app.use((req, res, next) => {
-    res.locals.currentUser = req.person;
-    next();
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
 });
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('Could not connect to MongoDB', err));
+// View Engine
+app.set('view engine', 'ejs');
 
-// Define routes
+// Routes
+// app.get('/fruits', (req, res) => {
+//     // send index.ejs with array of fruits
+//     res.render('fruits/index', { allFruits: fruits });
+// });
+// Routes
 app.get('/', (req, res) => {
-    res.render('home', { siteTitle: 'Project2app', user: req.user });
+    
+    res.render('index'); // Render the index.ejs template
+  });
+  
+  app.get('/users', (req, res) => {
+    
+    res.render('users/index'); // Render the users/index.ejs template
+  });
+  
+  app.get('/services', (req, res) => {
+    
+    res.render('services/index'); // Render the services/index.ejs template
+  });
+  
+  app.get('/stores', (req, res) => {
+    
+    res.render('stores/index'); // Render the stores/index.ejs template
+  });
+  
+  app.get('/reviews', (req, res) => {
+   
+    res.render('reviews/index'); // Render the reviews/index.ejs template
+  });
+  
+
+// Start Server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
-
-app.get('/profile', logInfo, (req, res) => {
-    res.render('profile', { name: req.user.name, email: req.user.email, phone: req.user.phone });
-});
-
-// Import auth routes
-const authRoutes = require('./routes/authRoutes');
-const serviceRoutes = require('./routes/serviceRoutes');
-const reviewRoutes = require('./routes/reviewRoutes');
-
-app.use('/auth', authRoutes);
-app.use('/services', serviceRoutes);
-app.use('/api/reviews', reviewRoutes);
-
-// Error handling for 404
-app.use((req, res) => {
-    res.status(404).render('404', { title: '404' });
-});
-
-// Start server
-const server = app.listen(PORT, () => {
-    console.log(`🏎️ You are listening on PORT ${PORT}`);
-});
-
-module.exports = server;
-
