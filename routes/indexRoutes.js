@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Import the Service model
-const Service = require('../models/service');
+const Service = require('../models/Service');
 
 // Define routes
 
