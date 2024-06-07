@@ -65,13 +65,13 @@ app.get('/', async (req, res) => {
 
 // Correct /login route to render login.ejs directly
 app.get('/login', (req, res) => {
-  res.render('login'); // Render the login.ejs template
+  res.render('login/login'); // Ensure this path matches your views directory structure
 });
 
 app.get('/users', logInfo, async (req, res) => { // Apply middleware if needed
   try {
     const users = await User.find({});
-    res.render('users/index', { users });
+    res.render('users/user', { users }); // Ensure this path matches your views directory structure
   } catch (error) {
     console.error('Error fetching data:', error);
     res.status(500).send('Internal Server Error');
@@ -81,7 +81,7 @@ app.get('/users', logInfo, async (req, res) => { // Apply middleware if needed
 app.get('/services', async (req, res) => {
   try {
     const services = await Service.find({});
-    res.render('services/index', { services });
+    res.render('services/service', { services }); // Ensure this path matches your views directory structure
   } catch (error) {
     console.error('Error fetching data:', error);
     res.status(500).send('Internal Server Error');
@@ -91,7 +91,7 @@ app.get('/services', async (req, res) => {
 app.get('/stores', async (req, res) => { // Correct route name
   try {
     const stores = await Store.find({});
-    res.render('stores/index', { stores });
+    res.render('stores/store', { stores }); // Ensure this path matches your views directory structure
   } catch (error) {
     console.error('Error fetching data:', error);
     res.status(500).send('Internal Server Error');
@@ -101,7 +101,7 @@ app.get('/stores', async (req, res) => { // Correct route name
 app.get('/reviews', async (req, res) => {
   try {
     const reviews = await Review.find({});
-    res.render('reviews/index', { reviews });
+    res.render('reviews/review', { reviews }); // Ensure this path matches your views directory structure
   } catch (error) {
     console.error('Error fetching data:', error);
     res.status(500).send('Internal Server Error');
