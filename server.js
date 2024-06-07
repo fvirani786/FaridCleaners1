@@ -5,14 +5,15 @@ const passport = require('passport');
 const flash = require('connect-flash');
 const dotenv = require('dotenv');
 const path = require('path');
-const SECRET_SESSION = process.env.SECRET_SESSION;
+const { Service, Review, Store, User } = require('./models'); // Import models
+const logInfo = require('./middleware/logInfo'); // Import logInfo middleware
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// // MongoDB Connection
+// MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log(err));
@@ -25,7 +26,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// // Session
+// Session
 app.use(session({
   secret: process.env.SECRET_SESSION,
   resave: false,
@@ -51,36 +52,68 @@ app.use((req, res, next) => {
 app.set('view engine', 'ejs');
 
 // Routes
-// app.get('/fruits', (req, res) => {
-//     // send index.ejs with array of fruits
-//     res.render('fruits/index', { allFruits: fruits });
-// });
-// Routes
-app.get('/', (req, res) => {
-    
-    res.render('index'); // Render the index.ejs template
-  });
-  
-  app.get('/users', (req, res) => {
-    
-    res.render('users/index'); // Render the users/index.ejs template
-  });
-  
-  app.get('/services', (req, res) => {
-    
-    res.render('services/index'); // Render the services/index.ejs template
-  });
-  
-  app.get('/stores', (req, res) => {
-    
-    res.render('stores/index'); // Render the stores/index.ejs template
-  });
-  
-  app.get('/reviews', (req, res) => {
-   
-    res.render('reviews/index'); // Render the reviews/index.ejs template
-  });
-  
+app.get('/', async (req, res) => {
+  try {
+    const services = await Service.find({});
+    const stores = await Store.find({});
+    res.render('index', { services, stores });
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+// Correct /login route to render login.ejs directly
+app.get('/login', (req, res) => {
+  res.render('login'); // Render the login.ejs template
+});
+
+app.get('/users', logInfo, async (req, res) => { // Apply middleware if needed
+  try {
+    const users = await User.find({});
+    res.render('users/index', { users });
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.get('/services', async (req, res) => {
+  try {
+    const services = await Service.find({});
+    res.render('services/index', { services });
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.get('/stores', async (req, res) => { // Correct route name
+  try {
+    const stores = await Store.find({});
+    res.render('stores/index', { stores });
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.get('/reviews', async (req, res) => {
+  try {
+    const reviews = await Review.find({});
+    res.render('reviews/index', { reviews });
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+// POST /login route
+app.post('/login', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/login',
+  failureFlash: true
+}));
 
 // Start Server
 app.listen(PORT, () => {
