@@ -1,10 +1,11 @@
-/* Basic reset for better cross-browser compatibility */
+/* Resetting some basic elements */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* General body styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -41,11 +42,13 @@ header nav a:hover {
   background-color: #555;
 }
 
+/* Page title styles */
 h1 {
   margin-top: 20px;
   text-align: center;
 }
 
+/* Form styles */
 form {
   margin-bottom: 20px;
   display: flex;
@@ -71,6 +74,7 @@ button:hover {
   background-color: #555;
 }
 
+/* List styles */
 ul {
   list-style-type: none;
   padding: 0;
@@ -95,3 +99,19 @@ ul li a:hover {
   color: white;
 }
 
+/* Review styles */
+.review {
+  background: #fff; /* Changed background color for better contrast */
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.review h2 {
+  margin-top: 0;
+}
+
+.review p {
+  line-height: 1.6;
+}
