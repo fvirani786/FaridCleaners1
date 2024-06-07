@@ -1,77 +1,121 @@
-require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const path = require('path');
 const session = require('express-session');
-const passport = require('./config/passport-config');
-const isLoggedIn = require('./middleware/logInfo');
-const { isAuthenticated } = require('./middleware/auth');
-const PORT = process.env.PORT || 3000;
-const SECRET_SESSION = process.env.SECRET_SESSION;
+const passport = require('passport');
+const flash = require('connect-flash');
+const dotenv = require('dotenv');
+const path = require('path');
+const { Service, Review, Store, User } = require('./models'); // Import models
+const logInfo = require('./middleware/logInfo'); // Import logInfo middleware
 
-// Import models
-const User = require('./models/Person');
+dotenv.config();
 
-// Initialize app
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-// Set EJS as the view engine
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+// MongoDB Connection
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.log(err));
+
+// Passport Config
+require('./config/passport')(passport);
 
 // Middleware
-app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Session
 app.use(session({
-    secret: SECRET_SESSION,
-    resave: false,
-    saveUninitialized: true
+  secret: process.env.SECRET_SESSION,
+  resave: false,
+  saveUninitialized: true
 }));
 
-
-// Initialize passport
+// Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Middleware for tracking users and alerts
+// Connect Flash
+app.use(flash());
+
+// Global Variables for Flash Messages
 app.use((req, res, next) => {
-    res.locals.currentUser = req.person;
-    next();
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
 });
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('Could not connect to MongoDB', err));
+// View Engine
+app.set('view engine', 'ejs');
 
-// Define routes
-app.get('/', (req, res) => {
-    res.render('home', { siteTitle: 'Project2app', user: req.user });
+// Routes
+app.get('/', async (req, res) => {
+  try {
+    const services = await Service.find({});
+    const stores = await Store.find({});
+    res.render('index', { services, stores });
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
-app.get('/profile', logInfo, (req, res) => {
-    res.render('profile', { name: req.user.name, email: req.user.email, phone: req.user.phone });
+// Correct /login route to render login.ejs directly
+app.get('/login', (req, res) => {
+  res.render('login'); // Render the login.ejs template
 });
 
-// Import auth routes
-const authRoutes = require('./routes/authRoutes');
-const serviceRoutes = require('./routes/serviceRoutes');
-const reviewRoutes = require('./routes/reviewRoutes');
-
-app.use('/auth', authRoutes);
-app.use('/services', serviceRoutes);
-app.use('/api/reviews', reviewRoutes);
-
-// Error handling for 404
-app.use((req, res) => {
-    res.status(404).render('404', { title: '404' });
+app.get('/users', logInfo, async (req, res) => { // Apply middleware if needed
+  try {
+    const users = await User.find({});
+    res.render('users/index', { users });
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
-// Start server
-const server = app.listen(PORT, () => {
-    console.log(`🏎️ You are listening on PORT ${PORT}`);
+app.get('/services', async (req, res) => {
+  try {
+    const services = await Service.find({});
+    res.render('services/index', { services });
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
-module.exports = server;
+app.get('/stores', async (req, res) => { // Correct route name
+  try {
+    const stores = await Store.find({});
+    res.render('stores/index', { stores });
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
+app.get('/reviews', async (req, res) => {
+  try {
+    const reviews = await Review.find({});
+    res.render('reviews/index', { reviews });
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+// POST /login route
+app.post('/login', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/login',
+  failureFlash: true
+}));
+
+// Start Server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
