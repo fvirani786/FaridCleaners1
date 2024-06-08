@@ -9,6 +9,12 @@ The goal of the project was to build a full stack app. My app, faridcleaners, ge
 
 To install this, fork and clone from the repo, start the server from the console by typing in npm run dev. To open up the webpage, type http://localhost:3000 into the navbar.
 
+User Accounts: 
+
+The user can sign up with their name, email and password 
+if the user has signed up, they're able to login
+Once the user has logged in, they will be rerouted back to the home page, where the user is able to look at the different services offered 
+
 Below are screenshots of my wireframe 
 
 
