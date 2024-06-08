@@ -1,0 +1,21 @@
+/* logs.css */
+
+/* Center everything */
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Ensure full viewport height */
+  background-color: aqua; /* Set background color to aqua */
+}
+
+/* Center the heading and form */
+h1, form {
+  text-align: center;
+}
+
+/* Make text bold */
+h1, label, input, button {
+  font-weight: bold;
+}
