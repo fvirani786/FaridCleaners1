@@ -98,10 +98,10 @@ app.get('/stores', async (req, res) => { // Correct route name
   }
 });
 
-app.get('/reviews', async (req, res) => {
+app.get('/review', async (req, res) => {
   try {
     const reviews = await Review.find({});
-    res.render('reviews/review', { reviews }); // Ensure this path matches your views directory structure
+    res.render('review/review', { reviews }); // Ensure this path matches your views directory structure
   } catch (error) {
     console.error('Error fetching data:', error);
     res.status(500).send('Internal Server Error');
