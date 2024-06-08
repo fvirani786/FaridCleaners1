@@ -13,8 +13,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f9f9f9;
+  justify-content: center; /* Center content vertically */
+  background-color: #f0f8ff; /* Light blue background color */
   color: #333;
+  height: 100vh; /* Full height of the viewport */
 }
 
 /* Header styles */
@@ -97,21 +99,4 @@ ul li a {
 ul li a:hover {
   background-color: #333;
   color: white;
-}
-
-/* Review styles */
-.review {
-  background: #a91818; /* Changed background color for better contrast */
-  padding: 20px;
-  margin: 20px 0;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.review h2 {
-  margin-top: 0;
-}
-
-.review p {
-  line-height: 1.6;
 }

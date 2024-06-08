@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/Person');
+const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -14,8 +14,8 @@ router.post('/signup', async (req, res) => {
     try {
         const { username, email, password, firstName, lastName } = req.body;
         const passwordHash = await bcrypt.hash(password, 10);
-        const person = new Person({ username, email, passwordHash, firstName, lastName });
-        await person.save();
+        const user = new User({ username, email, passwordHash, firstName, lastName });
+        await user.save();
         req.flash('success', 'You have successfully signed up!');
         res.redirect('/');
     } catch (err) {

@@ -2,14 +2,26 @@
 <html>
 <head>
   <title>Dry Cleaners</title>
-  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    body {
+      background-color: lightblue;
+      text-align: center;
+    }
+    .container {
+      margin-top: 50px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Dry Cleaners</h1>
+  <h1>Welcome to Our Dry Cleaners!</h1>
+  <div class="container">
+    <p>We offer dry cleaning, laundry, and alteration services. Currently, we have one location, but we plan to expand in the future.</p>
+  </div>
   <form action="/drycleaners" method="get">
     <input type="text" name="location" placeholder="Enter location">
     <select name="service">
-      <option value="">All </option>
+      <option value="">All</option>
       <% services.forEach(service => { %>
         <option value="<%= service._id %>"><%= service.name %></option>
       <% }) %>
@@ -19,9 +31,9 @@
   <header>
     <nav>
       <a href="/">Home</a>
-      <a href="/login">login</a>
+      <a href="/login">Login</a>
       <a href="/signup">Signup</a>
-      <a href="/review">review</a>
+      <a href="/review">Review</a>
     </nav>
   </header>
   <ul>
@@ -31,4 +43,5 @@
   </ul>
 </body>
 </html>
+
 

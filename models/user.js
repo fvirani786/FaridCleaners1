@@ -19,7 +19,7 @@ userSchema.pre('save', function(next) {
 });
 
 // create the model and export it
-const User = mongoose.model('User', userSchema);
+const user = mongoose.model('User', userSchema);
 
 // make this model avaliable for the index file
-module.exports = User;
+module.exports = user;

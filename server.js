@@ -108,12 +108,24 @@ app.get('/review', async (req, res) => {
   }
 });
 
+// Define a route for /signup
+app.get('/signup', (req, res) => {
+  res.render('signup/signup'); // Render your signup page
+});
+
 // POST /login route
 app.post('/login', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login',
   failureFlash: true
 }));
+
+// Define a route for handling signup form submission
+app.post('/auth/signup', (req, res) => {
+  
+  res.redirect('/'); 
+});
+
 
 // Start Server
 app.listen(PORT, () => {

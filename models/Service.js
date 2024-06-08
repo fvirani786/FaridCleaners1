@@ -18,4 +18,4 @@ const Service = mongoose.model('Service', serviceSchema);
 module.exports = Service;
 
 
-//TEST DATABASE for all the models expect user 
+//TEST DATABASE for all the models expect user
