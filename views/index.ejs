@@ -16,10 +16,11 @@
 <body>
   <h1>Welcome to Our Dry Cleaners!</h1>
   <div class="container">
-    <p>We offer dry cleaning, laundry, and alteration services. Currently, we have one location, but we plan to expand in the future.</p>
+    <p>We offer dry cleaning, laundry, and alteration services. 
+      Currently, we have one location, but we plan to expand in the future.</p>
   </div>
   <form action="/drycleaners" method="get">
-    <input type="text" name="location" placeholder="Enter location">
+    <!-- <input type="text" name="location" placeholder="Enter location"> -->
     <select name="service">
       <option value="">All</option>
       <% services.forEach(service => { %>
@@ -36,6 +37,14 @@
       <a href="/review">Review</a>
     </nav>
   </header>
+  <form action="/drycleaners" method="get">
+   
+    <label><input type="radio" name="service" value="drycleaning"> Dry Cleaning</label>
+    <label><input type="radio" name="service" value="laundry"> Laundry</label>
+    <label><input type="radio" name="service" value="alterations"> Alterations</label>
+    <button type="submit">Process your cleaning/clothes</button>
+  </form>
+  
   <ul>
     <% stores.forEach(store => { %>
       <li><a href="/stores/<%= store._id %>"><%= store.name %></a></li>
