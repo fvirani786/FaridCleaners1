@@ -1,0 +1,17 @@
+body {
+  background: linear-gradient(to right, #f3e7e9, #e3eeff, #e4fffe, #fef3d1, #f6e6ff);
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  margin-top: 50px;
+  color: #333;
+}
+
+p {
+  margin-bottom: 20px;
+  color: #555;
+}
