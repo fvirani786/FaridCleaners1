@@ -7,7 +7,7 @@ This is my 2nd project for GA
 
 The goal of the project was to build a full stack app. My app, faridcleaners, gets you dry cleaning services at your conviences from one click away. We do offer drop off services as well for those with busy work life 
 
-To install this, fork and clone from the repo, start the server from the console by typing in npm run dev. To open up the webpage, type http://localhost:3000 into the navbar.
+To install locally, simply fork and clone the repo, install dependancies(listed below), and startup the server from your console with npm run dev. To navigate to the app, open your browser and type http://localhost:3000 into the navbar. Alternatively, you can also now use my live link to access the page from any device or location
 
 User Accounts: 
 
