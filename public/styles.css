@@ -15,7 +15,7 @@ body {
   align-items: center;
   justify-content: center; /* Center content vertically */
   background: linear-gradient(to right, #4a4a8a, #6a6a9b, #8a8ab3, #aaaac9, #cacaf0); /* Darker gradient background */
-  color: #fff; /* Light text color to contrast with dark background */
+  color: #090909; /* Light text color to contrast with dark background */
   height: 100vh; /* Full height of the viewport */
 }
 
@@ -33,7 +33,7 @@ header nav {
 }
 
 header nav a {
-  color: white;
+  color: rgba(13, 9, 9, 0.538);
   text-decoration: none;
   padding: 10px 20px;
   border-radius: 5px;

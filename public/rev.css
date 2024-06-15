@@ -1,17 +1,96 @@
-body {
-  background: linear-gradient(to right, #f3e7e9, #e3eeff, #e4fffe, #fef3d1, #f6e6ff);
-  font-family: Arial, sans-serif;
-  text-align: center;
+/* Resetting some basic elements */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
-h1 {
-  margin-top: 50px;
+/* General body styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Center content vertically */
+  background: linear-gradient(to right, #f0f0f0, #e0e0e0, #d0d0d0, #c0c0c0, #b0b0b0); /* Light multiple-color gradient background */
   color: #333;
+  min-height: 100vh; /* Full height of the viewport */
+  position: relative; /* Ensure position relative for absolute positioning of images */
 }
 
+/* Container styles */
+.container {
+  width: 80%;
+  max-width: 800px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  position: relative; /* Ensure relative positioning for absolutely positioned children */
+}
+
+/* Page title styles */
+h1 {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Paragraph styles */
 p {
   margin-bottom: 20px;
-  color: #555;
+  text-align: center;
 }
+
+/* Reviews container styles */
+.reviews-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  position: relative; /* Ensure relative positioning for absolutely positioned children */
+}
+
+/* Review box styles */
+.review-box {
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  text-align: left;
+}
+
+.review-text {
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.review-author {
+  text-align: right;
+  font-weight: bold;
+}
+
+/* Side image styles */
+.side-image {
+  position: absolute;
+  width: 150px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Positioning for first instance of side image */
+.left-image {
+  top: 20px;
+  left: 20px;
+}
+
+/* Positioning for second instance of side image */
+.right-image {
+  bottom: 20px;
+  right: 20px;
+}
+

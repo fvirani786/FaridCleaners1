@@ -7,20 +7,37 @@
     body {
       background-color: lightblue;
       text-align: center;
+      position: relative; /* Ensure relative positioning for absolute children */
+    }
+    .banner-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      z-index: -1; /* Push the image behind content */
     }
     .container {
-      margin-top: 50px;
+      margin-top: 300px; /* Adjust top margin to accommodate the banner image */
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .black-text {
+      color: black; /* Change text color to black */
     }
   </style>
 </head>
 <body>
+  <img class="banner-image" src="https://www.dcleaners.com/app/uploads/2023/10/reasons-to-dry-clean-dress-business-shirts-scaled.jpeg" alt="Banner Image">
+
   <h1>Welcome to Our Dry Cleaners!</h1>
   <div class="container">
-    <p>We offer dry cleaning, laundry, and alteration services. 
+    <p class="black-text">We offer dry cleaning, laundry, and alteration services. 
       Currently, we have one location, but we plan to expand in the future.</p>
   </div>
   <form action="/drycleaners" method="get">
-    
     <select name="service">
       <option value="">All</option>
       <% services.forEach(service => { %>
@@ -38,13 +55,11 @@
     </nav>
   </header>
   <form action="/drycleaners" method="get">
-   
     <label><input type="radio" name="service" value="drycleaning"> Dry Cleaning</label>
     <label><input type="radio" name="service" value="laundry"> Laundry</label>
     <label><input type="radio" name="service" value="alterations"> Alterations</label>
     <button type="submit">Process your cleaning/clothes</button>
   </form>
-  
   <ul>
     <% stores.forEach(store => { %>
       <li><a href="/stores/<%= store._id %>"><%= store.name %></a></li>
@@ -52,5 +67,7 @@
   </ul>
 </body>
 </html>
+
+
 
 
