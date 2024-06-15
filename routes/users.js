@@ -4,10 +4,10 @@ const passport = require('passport');
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 
-// Register Page
+
 router.get('/register', (req, res) => res.render('register'));
 
-// Register Handle
+
 router.post('/register', async (req, res) => {
   const { username, password, password2 } = req.body;
   let errors = [];
@@ -56,10 +56,10 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// Login Page
+
 router.get('/login', (req, res) => res.render('login'));
 
-// Login Handle
+
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', {
     successRedirect: '/',
@@ -68,7 +68,7 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
-// Logout Handle
+
 router.get('/logout', (req, res) => {
   req.logout();
   req.flash('success_msg', 'You are logged out');

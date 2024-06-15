@@ -4,12 +4,12 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-// Render sign up page
+
 router.get('/signup', (req, res) => {
     res.render('signup');
 });
 
-// Handle sign up form submission
+
 router.post('/signup', async (req, res) => {
     try {
         const { username, email, password, firstName, lastName } = req.body;
@@ -23,12 +23,12 @@ router.post('/signup', async (req, res) => {
     }
 });
 
-// log in page
+
 router.get('/login', (req, res) => {
     res.render('login');
 });
 
-//log in form 
+
 router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -40,10 +40,10 @@ router.post('/login', async (req, res) => {
 
         const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        // Set the token as a cookie
+        
         res.cookie('token', token, { httpOnly: true });
 
-        // Redirect to home page
+       
         res.redirect('/');
     } catch (err) {
         res.status(500).json({ error: err.message });
