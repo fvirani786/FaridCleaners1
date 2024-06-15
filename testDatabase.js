@@ -56,7 +56,7 @@ const getAllStores = async () => {
     }
 };
 
-// UPDATE
+
 const updateService = async (filter, update) => {
     try {
         const response = await Service.updateOne(filter, update);
@@ -66,7 +66,7 @@ const updateService = async (filter, update) => {
     }
 };
 
-// DELETE
+
 const deleteService = async (filter) => {
     try {
         const response = await Service.deleteOne(filter);
@@ -76,7 +76,7 @@ const deleteService = async (filter) => {
     }
 };
 
-// You can define similar functions for Review and Store CRUD operations
+
 
 module.exports = {
     createService,
@@ -87,5 +87,5 @@ module.exports = {
     getAllStores,
     updateService,
     deleteService
-    // Add similar exports for Review and Store CRUD operations
+   
 };

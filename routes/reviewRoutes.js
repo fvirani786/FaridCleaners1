@@ -4,7 +4,7 @@ const router = express.Router();
 const Review = require('../models/Review');
 const { isAuthenticated } = require('../middleware/auth');
 
-// GET /reviews
+
 router.get('/', async (req, res) => {
     try {
         const reviews = await Review.find();
@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// POST /reviews
+
 router.post('/', isAuthenticated, async (req, res) => {
     try {
         const review = new Review({ ...req.body, reviewerId: req.user._id });
@@ -25,7 +25,7 @@ router.post('/', isAuthenticated, async (req, res) => {
     }
 });
 
-// PUT /reviews/:id
+
 router.put('/:id', isAuthenticated, async (req, res) => {
     try {
         const review = await Review.findById(req.params.id);
@@ -43,7 +43,7 @@ router.put('/:id', isAuthenticated, async (req, res) => {
     }
 });
 
-// DELETE /reviews/:id
+
 router.delete('/:id', isAuthenticated, async (req, res) => {
     try {
         const review = await Review.findById(req.params.id);
