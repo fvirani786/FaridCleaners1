@@ -8,7 +8,7 @@ const path = require('path');
 const { Service, Review, Store, User } = require('./models'); // Import models
 const logInfo = require('./middleware/logInfo'); // Import logInfo middleware
 
-dotenv.config();ddfad 
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -122,7 +122,8 @@ app.post('/login', passport.authenticate('local', {
 
 // Define a route for handling signup form submission
 app.post('/auth/signup', (req, res) => {
-  
+  //console.error('Data received:\n' + JSON.stringify(req.body));
+  User.create({'username': req.body.username,'firstName': req.body.firstName,'lastName': req.body.lastName,'email': req.body.email,'password': req.body.password})
   res.redirect('/'); 
 });
 
